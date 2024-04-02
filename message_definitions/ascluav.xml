@@ -1,0 +1,688 @@
+<?xml version="1.0"?>
+<!-- Mavlink Message Definition File for ASCL UAV team -->
+<mavlink>
+  <include>common.xml</include>
+  <version>1</version>
+  <!-- <include>common.xml</include> -->
+  <!-- ENUMS ==================================================================================================================================================================================================================== -->
+  <enums>
+    <enum name="ASCL_CATEGORY">
+      <description>Category a certain parameter/command is categorized. Mapping is as follows; 0: Navigation, 1: Control, 2: Guidance, 3: Mission, 4 and above: To be added.</description>
+      <entry value="0" name="ASCL_CATEGORY_NAVIGATION">
+        <description>Category Navigation</description>
+      </entry>
+      <entry value="1" name="ASCL_CATEGORY_CONTROL">
+        <description>Category Control</description>
+      </entry>
+      <entry value="2" name="ASCL_CATEGORY_GUIDANCE">
+        <description>Category Guidance</description>
+      </entry>
+      <entry value="3" name="ASCL_CATEGORY_MISSION">
+        <description>Category Mission</description>
+      </entry>
+      <entry value="4" name="ASCL_CATEGORY_RESERVED1">
+        <description>Category reserved</description>
+      </entry>
+      <entry value="5" name="ASCL_CATEGORY_RESERVED2">
+        <description>Category reserved</description>
+      </entry>
+      <entry value="6" name="ASCL_CATEGORY_RESERVED3">
+        <description>Category reserved</description>
+      </entry>
+    </enum>
+    <enum name="ASCL_PARAM_ID">
+      <description>Parameter ID. N=2^8, {0~N-1}: Navigation, {N~2N-1}: Control, {2N~3N-1}: Guidnance, {3N~4N-1}: Mission, and many more</description>
+      <!-- Navigation 1~4096 #4096 -->
+      <!-- 0~15: Covariance P0 -->
+      <entry value="0" name="ASCL_PARAM_ID_NAV_COV_P0_QUAT">
+        <description>Covariance P0 for quaternions</description>
+      </entry>
+      <entry value="1" name="ASCL_PARAM_ID_NAV_COV_P0_EULER_TILT">
+        <description>Covariance P0 for roll,pitch</description>
+      </entry>
+      <entry value="2" name="ASCL_PARAM_ID_NAV_COV_P0_EULER_HEADING">
+        <description>Covariance P0 for heading</description>
+      </entry>
+      <entry value="3" name="ASCL_PARAM_ID_NAV_COV_P0_HOR_VEL">
+        <description>Covariance P0 for horizontal velocity</description>
+      </entry>
+      <entry value="4" name="ASCL_PARAM_ID_NAV_COV_P0_VER_VEL">
+        <description>Covariance P0 for vertical velocity</description>
+      </entry>
+      <entry value="5" name="ASCL_PARAM_ID_NAV_COV_P0_HOR_POS">
+        <description>Covariance P0 for horizontal position</description>
+      </entry>
+      <entry value="6" name="ASCL_PARAM_ID_NAV_COV_P0_VER_POS">
+        <description>Covariance P0 for altitude</description>
+      </entry>
+      <entry value="7" name="ASCL_PARAM_ID_NAV_COV_P0_GYRO_BIAS">
+        <description>Covariance P0 for gyro bias</description>
+      </entry>
+      <entry value="8" name="ASCL_PARAM_ID_NAV_COV_P0_ACC_BIAS">
+        <description>Covariance P0 for acc bias</description>
+      </entry>
+      <entry value="9" name="ASCL_PARAM_ID_NAV_COV_P0_MAG_NED">
+        <description>Covariance P0 for NED magnetic flux</description>
+      </entry>
+      <entry value="10" name="ASCL_PARAM_ID_NAV_COV_P0_MAG_BIAS">
+        <description>Covariance P0 for mag bias</description>
+      </entry>
+      <!-- 11~15 reserved for additional P0 -->
+      <!-- 16~31: Covariance Q -->
+      <entry value="16" name="ASCL_PARAM_ID_NAV_COV_Q_GYRO">
+        <description>Covariance Q for delta angle</description>
+      </entry>
+      <entry value="17" name="ASCL_PARAM_ID_NAV_COV_Q_GYRO_BIAS">
+        <description>Covariance Q for gyro bias</description>
+      </entry>
+      <entry value="18" name="ASCL_PARAM_ID_NAV_COV_Q_ACC">
+        <description>Covariance Q for delta velocity</description>
+      </entry>
+      <entry value="19" name="ASCL_PARAM_ID_NAV_COV_Q_ACC_BIAS">
+        <description>Covariance Q for acc bias</description>
+      </entry>
+      <entry value="20" name="ASCL_PARAM_ID_NAV_COV_Q_MAG_NED">
+        <description>Covariance Q for NED magnetic flux</description>
+      </entry>
+      <entry value="21" name="ASCL_PARAM_ID_NAV_COV_Q_MAG_BIAS">
+        <description>Covariance Q for mag bias</description>
+      </entry>
+      <!-- 22~31: reserved for additional Q -->
+      <!-- 32~47: Covarnace R -->
+      <entry value="32" name="ASCL_PARAM_ID_NAV_COV_R_GPS_HOR_POS">
+        <description>Covariance R for NE position of GPS lat, long, height converted into NED</description>
+      </entry>
+      <entry value="33" name="ASCL_PARAM_ID_NAV_COV_R_GPS_VER_POS">
+        <description>Covariance R for D position of GPS lat, long, height converted into NED</description>
+      </entry>
+      <entry value="34" name="ASCL_PARAM_ID_NAV_COV_R_GPS_VEL">
+        <description>Covariance R for GPS velocity_ned</description>
+      </entry>
+      <entry value="35" name="ASCL_PARAM_ID_NAV_COV_R_BARO_ALT">
+        <description>Covariance R for barometric altitude</description>
+      </entry>
+      <entry value="36" name="ASCL_PARAM_ID_NAV_COV_R_MAG_BODY">
+        <description>Covariance R for magnetometer measurement</description>
+      </entry>
+      <entry value="37" name="ASCL_PARAM_ID_NAV_COV_R_MAG_DECLINATION">
+        <description>Covariance R for magnetic declination</description>
+      </entry>
+      <entry value="38" name="ASCL_PARAM_ID_NAV_COV_R_AHRS">
+        <description>Covariance R for AHRS</description>
+      </entry>
+      <!-- 39~47: reserved for additional R -->
+      <!-- ========================================================== -->
+      <!-- Control 4096~8191 #4096 -->
+      <!-- example -->
+      <entry value="4096" name="ASCL_PARAM_ID_CTRL_GAIN_P_RATE_P">
+      </entry>
+      <entry value="4097" name="ASCL_PARAM_ID_CTRL_GAIN_I_RATE_P">
+      </entry>
+      <entry value="4098" name="ASCL_PARAM_ID_CTRL_GAIN_D_RATE_P">
+      </entry>
+      <entry value="4099" name="ASCL_PARAM_ID_CTRL_GAIN_P_RATE_Q">
+      </entry>
+      <entry value="4100" name="ASCL_PARAM_ID_CTRL_GAIN_I_RATE_Q">
+      </entry>
+      <entry value="4101" name="ASCL_PARAM_ID_CTRL_GAIN_D_RATE_Q">
+      </entry>
+      <entry value="4102" name="ASCL_PARAM_ID_CTRL_GAIN_P_RATE_R">
+      </entry>
+      <entry value="4103" name="ASCL_PARAM_ID_CTRL_GAIN_I_RATE_R">
+      </entry>
+      <entry value="4104" name="ASCL_PARAM_ID_CTRL_GAIN_D_RATE_R">
+      </entry>
+      <entry value="4105" name="ASCL_PARAM_ID_CTRL_GAIN_P_ATT_ROLL">
+      </entry>
+      <entry value="4106" name="ASCL_PARAM_ID_CTRL_GAIN_I_ATT_ROLL">
+      </entry>
+      <entry value="4107" name="ASCL_PARAM_ID_CTRL_GAIN_D_ATT_ROLL">
+      </entry>
+      <entry value="4108" name="ASCL_PARAM_ID_CTRL_GAIN_P_ATT_PITCH">
+      </entry>
+      <entry value="4109" name="ASCL_PARAM_ID_CTRL_GAIN_I_ATT_PITCH">
+      </entry>
+      <entry value="4110" name="ASCL_PARAM_ID_CTRL_GAIN_D_ATT_PITCH">
+      </entry>
+      <entry value="4111" name="ASCL_PARAM_ID_CTRL_GAIN_P_ATT_YAW">
+      </entry>
+      <entry value="4112" name="ASCL_PARAM_ID_CTRL_GAIN_I_ATT_YAW">
+      </entry>
+      <entry value="4113" name="ASCL_PARAM_ID_CTRL_GAIN_D_ATT_YAW">
+      </entry>
+      <!-- ========================================================== -->
+      <!-- Guidance: 8192~12287 #4096 -->
+      <!-- example -->
+      <entry value = "8192" name="ASCL_PARAM_ID_GUID_PN_CONSTANT">
+        <description>Proportional constant of PN guidance, 3~5</description>
+      </entry>
+      <entry value = "8193" name="ASCL_PARAM_ID_GUID_MAXIMUM_PULLUP_G">
+        <description>Constraint on maximum acceleration represented in "g"</description>
+      </entry>
+      <!-- ========================================================== -->
+      <!-- Mission: 12288~16383 #4096 -->
+      <!-- example -->
+      <entry value = "12288" name="ASCL_PARAM_ID_MISSION_BATTERY_RTB">
+        <description>Vehicle should perform RTB when battery level is below this</description>
+      </entry>
+      <!-- ========================================================== -->
+      <!-- Many more -->
+    </enum>
+    <enum name="ASCL_PARAM_TYPE">
+      <description>Specifies the datatype of a ASCL parameter.</description>
+      <entry value="1" name="ASCL_PARAM_TYPE_UINT8">
+        <description>8-bit unsigned integer</description>
+      </entry>
+      <entry value="2" name="ASCL_PARAM_TYPE_INT8">
+        <description>8-bit signed integer</description>
+      </entry>
+      <entry value="3" name="ASCL_PARAM_TYPE_UINT16">
+        <description>16-bit unsigned integer</description>
+      </entry>
+      <entry value="4" name="ASCL_PARAM_TYPE_INT16">
+        <description>16-bit signed integer</description>
+      </entry>
+      <entry value="5" name="ASCL_PARAM_TYPE_UINT32">
+        <description>32-bit unsigned integer</description>
+      </entry>
+      <entry value="6" name="ASCL_PARAM_TYPE_INT32">
+        <description>32-bit signed integer</description>
+      </entry>
+      <entry value="7" name="ASCL_PARAM_TYPE_UINT64">
+        <description>64-bit unsigned integer</description>
+      </entry>
+      <entry value="8" name="ASCL_PARAM_TYPE_INT64">
+        <description>64-bit signed integer</description>
+      </entry>
+      <entry value="9" name="ASCL_PARAM_TYPE_REAL32">
+        <description>32-bit floating-point</description>
+      </entry>
+      <entry value="10" name="ASCL_PARAM_TYPE_REAL64">
+        <description>64-bit floating-point</description>
+      </entry>
+    </enum>
+    <enum name="ASCL_PARAM_RESULT">
+      <description>Status of a parameter. in response of ASCL_PARAM_SET/ASCL_PARAM_REQUEST</description>
+      <entry value="1" name="ASCL_PARAM_RESULT_ACCEPTED">
+        <description>Parameter published through ASCL_PARAM_SET is accepted</description>
+      </entry>
+      <entry value="2" name="ASCL_PARAM_RESULT_REJECTED">
+        <description>Parameter published through ASCL_PARAM_SET is rejected since it's invalid</description>
+      </entry>
+      <entry value="3" name="ASCL_PARAM_RESULT_INVALID_ID">
+        <description>Parameter identified through both ASCL_PARAM_SET/ASCL_PARAM_REQUEST is not accessible</description>
+      </entry>
+      <entry value="4" name="ASCL_PARAM_RESULT_RESPONSE">
+        <description>Parameter is correctly returned in response of ASCL_PARAM_REQUEST</description>
+      </entry>
+    </enum>
+
+    <enum name="ASCL_EKF_FUSION">
+      <description>Specifies fusion type</description>
+      <entry value="128" name="ASCL_EFK_FUSION_GPS_POS">
+        <description></description>
+      </entry>
+      <entry value="64" name="ASCL_EFK_FUSION_GPS_VEL">
+        <description></description>
+      </entry>
+      <entry value="32" name="ASCL_EFK_FUSION_BARO_ALT">
+        <description></description>
+      </entry>
+      <entry value="16" name="ASCL_EFK_FUSION_MAG_XYZ">
+        <description></description>
+      </entry>
+      <entry value="8" name="ASCL_EFK_FUSION_MAG_DECL">
+        <description></description>
+      </entry>
+      <entry value="4" name="ASCL_EFK_FUSION_AHRS">
+        <description></description>
+      </entry>
+      <entry value="2" name="ASCL_EFK_FUSION_RESERVED1">
+        <description></description>
+      </entry>
+      <entry value="1" name="ASCL_EFK_FUSION_RESERVED2">
+        <description></description>
+      </entry>
+      <entry value="0" name="ASCL_EFK_FUSION_NONE">
+        <description></description>
+      </entry>
+      <entry value="255" name="ASCL_EKF_FUSION_ALL">
+        <description></description>
+      </entry>
+    </enum>
+
+    <enum name="ASCL_SENSOR_CALIBRATION">
+      <description>Specified sensor calibration type</description>
+      <entry value="8" name="ASCL_SENSOR_CALIBRATION_GYRO"></entry>
+      <entry value="4" name="ASCL_SENSOR_CALIBRATION_ACC"></entry>
+      <entry value="2" name="ASCL_SENSOR_CALIBRATION_HEIGHT"></entry>
+      <entry value="1" name="ASCL_SENSOR_CALIBRATION_MAG"></entry>
+      <entry value="128" name="ASCL_SENSOR_CALIBRATION_RESERVED1"></entry>
+      <entry value="64" name="ASCL_SENSOR_CALIBRATION_RESERVED2"></entry>
+      <entry value="32" name="ASCL_SENSOR_CALIBRATION_RESERVED3"></entry>
+      <entry value="16" name="ASCL_SENSOR_CALIBRATION_RESERVED4"></entry>
+      <entry value="0" name="ASCL_SENSOR_CALIBRATION_NONE">
+        <description>no designated calibration</description>
+      </entry>
+      <entry value="255" name="ASCL_SENSOR_CALIBRATION_ALL">
+        <description></description>
+      </entry>
+    </enum>
+
+    <!-- COMMANDS ==================================================================================================================================================================================================================== -->
+    <enum name="ASCL_COMMAND">
+      <description>Enumeration(s) encoding command (GCS>FC)</description>
+      <entry value="0" name="ASCL_COMMAND_NAV_RESET_COVARIANCE_FROM_TO">
+        <description>Reset Covariance P of EKF within designated indexes.</description>
+        <param index="1" label="toP0">0: maintain current, otherwise reset to P0</param>
+        <param index="2">Empty</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">from idx</param>
+        <param index="6">to idx</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="1" name="ASCL_COMMAND_NAV_RESET_COVARIANCE_ALL">
+        <description>Reset covariance of EKF22</description>
+        <param index="1" label="toP0">0: maintain current, otherwise reset to P0</param>
+        <param index="2">Empty</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="2" name="ASCL_COMMAND_NAV_RESET_STATE_FROM_TO">
+        <description>Reset selected navigation state of EKF22</description>
+        <param index="1" label="toZero">0: maintain current, otherwise reset to zero(zero-ables)</param>
+        <param index="2">Empty</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">from idx</param>
+        <param index="6">to idx</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="3" name="ASCL_COMMAND_NAV_RESET_STATE_ALL">
+        <description>Reset navigation state of EKF22</description>
+        <param index="1" label="toZero">0: maintain current, otherwise reset to zero(zero-ables)</param>
+        <param index="2">Empty</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="4" name="ASCL_COMMAND_NAV_SET_FUSION">
+        <description>Turn on/off fusion flag of fusible data</description>
+        <param index="1" label="set">0: reset(no fusion), otherwise set(do fusion)</param>
+        <param index="2">Empty</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5" label="fusion_id" enum="ASCL_EKF_FUSION">Indicate which fusion</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+      <entry value="5" name="ASCL_COMMAND_NAV_CALIBRATE_SENSORS">
+        <description>Calibrate designated sensor(s)</description>
+        <param index="1">Empty</param>
+        <param index="2">Gyro Calibration 0:off, otherwise:on</param>
+        <param index="3">Acc Calibration 0:off, otherwise:on</param>
+        <param index="4">Height(Baro-Gps-etc) Calibration 0:off, otherwise:on</param>
+        <param index="5">Mag Calibration 0:off, otherwise:on</param>
+        <param index="6">Reserved1</param>
+        <param index="7">Reserved2</param>
+      </entry>
+      <entry value="6" name="ASCL_COMMAND_NAV_USE_CALIBRATED">
+        <description>Flag whether or not to use FC's calibration data</description>
+        <param index="1">Empty</param>
+        <param index="2">Use Calibrated Gyro 0:off, otherwise:on</param>
+        <param index="3">Use Calibrated Acc 0:off, otherwise:on</param>
+        <param index="4">Use Calibrated Height(Baro-Gps-etc) 0:off, otherwise:on</param>
+        <param index="5">Use Calibrated Mag 0:off, otherwise:on</param>
+        <param index="6">Reserved1</param>
+        <param index="7">Reserved2</param>
+      </entry>
+      <entry value="7" name="ASCL_COMMAND_NAV_OVERRIDE_CALIBRATED">
+        <description>Override FC's calibration data into offline calibrated value</description>
+        <param index="1" label="calib_id" enum="ASCL_SENSOR_CALIBRATION"></param>
+        <param index="2">bias x-axis</param>
+        <param index="3">bias y-axis</param>
+        <param index="4">bias z-axis</param>
+        <param index="5">scale factor x-axis</param>
+        <param index="6">scale factor y-axis</param>
+        <param index="7">scale factor z-axis</param>
+      </entry>
+      <entry value="8" name="ASCL_COMMAND_NAV_SET_HOME">
+        <description>Set home position of FC as command</description>
+        <param index="1" label=""></param>
+        <param index="2">Empty</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">latitude in degrees * 10^7</param>
+        <param index="6">longitude in degrees * 10^7</param>
+        <param index="7">altitude in mm</param>
+      </entry>
+      <entry value="9" name="ASCL_COMMAND_NAV_GET_HOME">
+        <description>Request for home position of FC</description>
+        <param index="1" label=""></param>
+        <param index="2">Empty</param>
+        <param index="3">Empty</param>
+        <param index="4">Empty</param>
+        <param index="5">Empty</param>
+        <param index="6">Empty</param>
+        <param index="7">Empty</param>
+      </entry>
+    </enum>
+
+    <enum name="ASCL_COMMAND_RESULT">
+      <entry value="1" name="ASCL_COMMAND_RESULT_OK">
+        <description>Command is OK/applied</description>
+      </entry>
+      <entry value="2" name="ASCL_COMMAND_RESULT_ERR">
+        <description>Generic Error</description>
+      </entry>
+      <entry value="3" name="ASCL_COMMAND_RESULT_ERR_REJECTED">
+        <description>Command is refused by subscriber as it's not applicable at the moment</description>
+      </entry>
+      <entry value="4" name="ASCL_COMMAND_RESULT_ERR_UNKNOWN">
+        <description>Command is refused by subscriber as it's unknown command</description>
+      </entry>
+    </enum>
+  </enums>
+
+
+
+  <!-- MESSAGES ==================================================================================================================================================================================================================== -->
+  <messages>
+    <!-- template -->
+    <!-- <message id="50000" name="HEARTBEAT">
+      <description>The heartbeat message shows that a system or component is present and responding. The type and autopilot fields (along with the message component id), allow the receiving system to treat further messages from this system appropriately (e.g. by laying out the user interface based on the autopilot). This microservice is documented at https://mavlink.io/en/services/heartbeat.html</description>
+      <field type="uint8_t" name="type" enum="MAV_TYPE">Vehicle or component type. For a flight controller component the vehicle type (quadrotor, helicopter, etc.). For other components the component type (e.g. camera, gimbal, etc.). This should be used in preference to component id for identifying the component type.</field>
+      <field type="uint8_t" name="autopilot" enum="MAV_AUTOPILOT">Autopilot type / class. Use MAV_AUTOPILOT_INVALID for components that are not flight controllers.</field>
+      <field type="uint8_t" name="base_mode" enum="MAV_MODE_FLAG" display="bitmask">System mode bitmap.</field>
+      <field type="uint32_t" name="custom_mode">A bitfield for use for autopilot-specific flags</field>
+      <field type="uint8_t" name="system_status" enum="MAV_STATE">System status flag.</field>
+      <field type="uint8_t_mavlink_version" name="mavlink_version">MAVLink version, not writable by user, gets added by protocol because of magic data type: uint8_t_mavlink_version</field>
+    </message> -->
+    <!-- ========================================================== -->
+    <!-- BEGIN ASCL defined message id range (0xd000 to 0xdfff) -->
+    <!-- ========================================================== -->
+
+    <!-- Parameter-related: 0xcff0(53232) ~ 0xcfff(53247) #16 -->
+    <message id="53232" name="ASCL_PARAM_SET">
+      <description>Set a Parameter that corresponds to ASCL_PARAM. SUBSCRIBER of this message should PUBLISH ASCL_PARAM_VALUE in order to let PUBLISHER know</description>
+      <field type="uint16_t" name="param_id" enum="ASCL_PARAM_ID">ID of a parameter</field>
+      <field type="float" name="param_value">Value of a parameter</field>
+      <field type="uint8_t" name="param_type" enum="ASCL_PARAM_TYPE">Type of a parameter</field>
+    </message>
+    <message id="53233" name="ASCL_PARAM_REQUEST">
+      <description>Requesting a parameter using ID of it</description>
+      <field type="uint16_t" name="param_id" enum="ASCL_PARAM_ID">ID of a parameter</field>
+    </message>
+    <message id="53234" name="ASCL_PARAM_VALUE">
+      <description>Publish parameter value with corresponding status result @ either case. 1.ASCL_PARAM_SET > value + status: rejected/accepted, 2.ASCL_PARAM_REQUEST > value + response of request</description>
+      <field type="uint16_t" name="param_id" enum="ASCL_PARAM_ID">ID of a parameter</field>
+      <field type="float" name="param_value">Value of a parameter</field>
+      <field type="uint8_t" name="param_type" enum="ASCL_PARAM_TYPE">Type of a parameter</field>
+      <field type="uint8_t" name="result" enum="ASCL_PARAM_RESULT">Status of a parameter</field>
+    </message>
+    <!-- many more.. -->
+
+    <!-- General TM/TC: 0xd000(53248) ~ 0xdfff(57343) #4096 -->
+    <!-- [Telecommand]: 0xd000(53248) ~ 0xd7ff(55295) #2048 -->
+    <message id="53248" name="ASCL_COMMAND_SEND_FI">
+      <description>Message encoding a command with parameters</description>
+      <field type="uint16_t" name="command_id" enum="ASCL_COMMAND">Command ID</field>
+      <field type="uint16_t" name="option">command option, see ASCL_COMMAND enum</field>
+      <field type="float" name="paramf1">PARAM1, float, see ASCL_COMMAND enum</field>
+      <field type="float" name="paramf2">PARAM2, float, see ASCL_COMMAND enum</field>
+      <field type="float" name="paramf3">PARAM3, float, see ASCL_COMMAND enum</field>
+      <field type="int32_t" name="parami1">PARAM1, int, see ASCL_COMMAND enum, e.g. local: x position in meters * 1e4, global: latitude in degrees * 10^7</field>
+      <field type="int32_t" name="parami2">PARAM2, int, see ASCL_COMMAND enum, e.g. local: y position in meters * 1e4, global: longitude in degrees * 10^7</field>
+      <field type="int32_t" name="parami3">PARAM3, int, see ASCL_COMMAND enum, e.g. z position: global: altitude in meters (relative or absolute, depending on frame).</field>
+    </message>
+    <message id="53249" name="ASCL_COMMAND_SEND_F">
+      <description>Message encoding a command with parameters</description>
+      <field type="uint16_t" name="command_id" enum="ASCL_COMMAND">Command ID</field>
+      <field type="uint16_t" name="option">command option, see ASCL_COMMAND enum</field>
+      <field type="float" name="paramf1">PARAM1, float, see ASCL_COMMAND enum</field>
+      <field type="float" name="paramf2">PARAM2, float, see ASCL_COMMAND enum</field>
+      <field type="float" name="paramf3">PARAM3, float, see ASCL_COMMAND enum</field>
+      <field type="float" name="paramf4">PARAM4, float, see ASCL_COMMAND enum</field>
+      <field type="float" name="paramf5">PARAM5, float, see ASCL_COMMAND enum</field>
+      <field type="float" name="paramf6">PARAM6, float, see ASCL_COMMAND enum</field>
+    </message>
+    <message id="53250" name="ASCL_COMMAND_ACK">
+      <description>Message encoding an acknoledgment of subscribed command</description>
+      <field type="uint16_t" name="command_id" enum="ASCL_COMMAND">Command ID</field>
+      <field type="uint8_t" name="result" enum="ASCL_COMMAND_RESULT">Result of Command designated by Command ID</field>
+    </message>
+
+    <!-- [Telemetry]: 0xd800(55296) ~ 0xdfff(57343) #2048 -->
+    <message id="55296" name="ASCL_TELEMETRY_NAV_STATE_REGULAR_VALUE">
+      <description>Message encoding regular telemetry set</description>
+      <field type="uint32_t" name="timems" units="ms">FC time in ms</field>
+      <field type="float[3]" name="pqr" units="rad/s">Angular rate in rad/s</field>
+      <field type="float[3]" name="euler" units="deg">Euler angle in deg</field>
+      <field type="float[4]" name="quat" units="none">Quaternion</field>
+      <field type="float[3]" name="acc" units="m/s">Linear acceleration in m/s2</field>
+      <field type="float[3]" name="velNed" units="m/s">Velocity of a vehicle in NED frame in m/s</field>
+      <field type="float[3]" name="ned" units="m">NED position in m</field>
+      <field type="uint32_t[3]" name="llh" units="degE7,mm">latitude/longitude/height in degE7/degE7/mm as integer</field>
+      <field type="uint16_t" name="navStatus" units="none">navigational status. Filter validity/Sensor validity</field>
+      <field type="uint16_t" name="filterStatus" units="none">filter status. msB: calibrated sensors on hot, lsB: fused</field>
+    </message>
+    <message id="55297" name="ASCL_TELEMETRY_NAV_STATE_REGULAR_COV">
+      <description>Message encoding regular telemetry set</description>
+      <field type="uint32_t" name="timems" units="ms">FC time in ms</field>
+      <field type="float[10]" name="covQuat">Upper triangle of P(IDX_QUAT:IDX_QUAT+3, IDX_QUAT:IDX_QUAT+3)</field>
+      <!-- <field type="float[21]" name="covVelPos">Upper triangle of P(IDX_VEL:IDX_POS+2, IDX_VEL:IDX_POS+2)</field> -->
+      <field type="float[22]" name="covDiag">Diagonal element of P(IDX_GYRO_BIAS:end, IDX_GYRO_BIAS:end)</field>
+    </message>
+
+    <message id="55298" name="ASCL_TELEMETRY_NAV_STATE_ATT">
+      <description>Message encoding attitude-related estimation</description>
+      <field type="uint32_t" name="timems" units="ms">FC time in ms</field>
+      <field type="float[3]" name="pqr" units="rad/s">Angular rate in rad/s</field>
+      <field type="float[3]" name="euler" units="deg">Euler angle in deg</field>
+      <field type="float[4]" name="quat" units="none">Quaternion</field>
+      <field type="float[10]" name="covQuat">Covariance of Quaternion</field>
+      <field type="uint8_t" name="fused">Flags whether sensor(s) data is fused</field>
+    </message>
+    <message id="55299" name="ASCL_TELEMETRY_NAV_STATE_VEL_POS">
+      <description>Message encoding position-related estimation</description>
+      <field type="uint32_t" name="timems" units="ms">FC time in ms</field>
+      <field type="float[3]" name="acc" units="m/s">Linear acceleration in m/s2</field>
+      <field type="float[3]" name="velNed" units="m/s">Velocity of a vehicle in NED frame in m/s</field>
+      <field type="float[3]" name="ned" units="m">NED position in m</field>
+      <field type="uint32_t[3]" name="llh" units="degE7,mm">latitude/longitude/height in degE7/degE7/mm as integer</field>
+      <field type="float[21]" name="covVelPos">Covariance of ned velocity and ned position</field>
+      <field type="uint8_t" name="fused">Flags whether sensor(s) data is fused</field>
+    </message>
+    <message id="55300" name="ASCL_TELEMETRY_NAV_STATE_REFERNCE">
+      <description>Message encoding navigational reference(believed to be true)</description>
+      <field type="uint32_t" name="timems" units="ms">FC time in ms</field>
+      <field type="float[3]" name="euler" units="deg">Euler angle in deg</field>
+      <field type="uint32_t[3]" name="llh" units="degE7,mm">latitude/longitude/height in degE7/degE7/mm as integer</field>
+      <field type="float[3]" name="velNed" units="m/s">Velocity of a vehicle in NED frame in m/s</field>
+    </message>
+    <message id="55301" name="ASCL_TELEMETRY_HOME">
+      <description>Message encoding home position</description>
+      <field type="uint32_t" name="timems" units="ms">FC time in ms</field>
+      <field type="uint32_t" name="lat" units="degE7">Latitude in deg* 10^7 as integer</field>
+      <field type="uint32_t" name="lon" units="degE7">Longitude in deg* 10^7 as integer</field>
+      <field type="uint32_t" name="height" units="mm">Height in mm as integer</field>
+      <field type="uint8_t" name="state">Home set state. Altitude only, 3D set</field>
+    </message>
+
+    <message id="55400" name="ASCL_TELEMETRY_SENSOR_MAG">
+      <description>Message encoding magnetometer data</description>
+      <field type="uint32_t" name="timems" units="ms">FC time in ms</field>
+      <field type="float[3]" name="mag">Magnetic field in body frame in gauss</field>
+    </message>
+    <message id="55401" name="ASCL_TELEMETRY_SENSOR_IMU">
+      <description>Message encoding imu(gyro,acc) data</description>
+      <field type="uint32_t" name="timems" units="ms">FC time in ms</field>
+      <field type="float[3]" name="gyro" units="rad/s">Angular rate in rad/s</field>
+      <field type="float[3]" name="acc" units="m/s">Linear acceleration in m/s2</field>
+    </message>
+    <message id="55402" name="ASCL_TELEMETRY_SENSOR_GPS">
+      <description>Message encoding GPS data</description>
+      <field type="uint32_t" name="timems" units="ms">FC time in ms</field>
+      <field type="uint32_t" name="lat" units="degE7">Latitude in deg* 10^7 as integer</field>
+      <field type="uint32_t" name="lon" units="degE7">Longitude in deg* 10^7 as integer</field>
+      <field type="uint32_t" name="height" units="mm">Height in mm as integer</field>
+      <field type="uint32_t[3]" name="velNed" units="mm/s">Velocity of a vehicle in NED frame in mm/s as integer</field>
+      <field type="uint8_t" name="numSats">Number of valid satellites</field>
+      <field type="uint8_t" name="fixType">GPS Position fix type. 2D fix, 3D fix, etc.</field>
+    </message>
+    <message id="55403" name="ASCL_TELEMETRY_SENSOR_BARO">
+      <description>Message encoding barometer data</description>
+      <field type="uint32_t" name="timems" units="ms">FC time in ms</field>
+      <field type="float" name="pressure" units="bar">Atmospheric pressure in bar</field>
+      <field type="float" name="temperature" units="degC">Ambient temperature in degree celsius</field>
+      <field type="uint32_t" name="alt" units="mm">Barometric altitude in mm as integer</field>
+    </message>
+    <message id="55404" name="ASCL_TELEMETRY_SENSOR_GPS_INS">
+      <description>Message encoding GPS/INS data. VN200 at the moment</description>
+      <field type="uint32_t" name="timems" units="ms">FC time in ms</field>
+      <field type="uint32_t" name="lat" units="degE7">Latitude in deg* 10^7 as integer</field>
+      <field type="uint32_t" name="lon" units="degE7">Longitude in deg* 10^7 as integer</field>
+      <field type="uint32_t" name="height" units="mm">Height in mm as integer</field>
+      <field type="uint32_t[3]" name="velNed" units="mm/s">Velocity of a vehicle in NED frame in mm/s as integer</field>
+      <field type="float[3]" name="euler" units="deg">Euler angle in deg</field>
+      <field type="float[3]" name="gyro" units="rad/s">Angular rate in rad/s</field>
+      <field type="float[3]" name="acc" units="m/s">Linear acceleration in m/s2</field>
+    </message>
+    <message id="55410" name="ASCL_TELEMETRY_SENSOR_GENERAL">
+      <description>Message encoding collection of general sensor(s) data. Each field can refer to any kind of sensor</description>
+      <field type="uint32_t" name="timems" units="ms">FC time in ms</field>
+      <field type="float[3]" name="ned" units="m">NED position in m</field>
+      <field type="uint32_t[3]" name="llh" units="degE7,mm">latitude/longitude/height in degE7/degE7/mm as integer</field>
+      <field type="float[3]" name="velNed" units="m/s">Velocity of a vehicle in NED frame in m/s</field>
+      <field type="float[3]" name="euler" units="deg">Euler angle in deg</field>
+      <field type="float[3]" name="mag">Magnetic field in body frame in gauss</field>
+      <field type="float[3]" name="gyro" units="rad/s">Angular rate in rad/s</field>
+      <field type="float[3]" name="acc" units="m/s">Linear acceleration in m/s2</field>
+      <field type="float[3]" name="reserved1" units="TBD">Reserved space for flexible operation</field>
+      <field type="float[3]" name="reserved2" units="TBD">Reserved space for flexible operation</field>
+      <field type="float[3]" name="reserved3" units="TBD">Reserved space for flexible operation</field>
+      <field type="float[3]" name="reserved4" units="TBD">Reserved space for flexible operation</field>
+    </message>
+
+    <message id="55500" name="ASCL_RC_CHANNELS_RAW">
+      <description>Raw values of RC input</description>
+      <field type="uint16_t" name="chan1">RC Channel 1 Raw Value</field>
+      <field type="uint16_t" name="chan2">RC Channel 2 Raw Value</field>
+      <field type="uint16_t" name="chan3">RC Channel 3 Raw Value</field>
+      <field type="uint16_t" name="chan4">RC Channel 4 Raw Value</field>
+      <field type="uint16_t" name="chan5">RC Channel 5 Raw Value</field>
+      <field type="uint16_t" name="chan6">RC Channel 6 Raw Value</field>
+      <field type="uint16_t" name="chan7">RC Channel 7 Raw Value</field>
+      <field type="uint16_t" name="chan8">RC Channel 8 Raw Value</field>
+      <field type="uint16_t" name="chan9">RC Channel 9 Raw Value</field>
+      <field type="uint16_t" name="chan10">RC Channel 10 Raw Value</field>
+      <field type="uint16_t" name="chan11">RC Channel 11 Raw Value</field>
+      <field type="uint16_t" name="chan12">RC Channel 12 Raw Value</field>
+      <field type="uint16_t" name="chan13">RC Channel 13 Raw Value</field>
+      <field type="uint16_t" name="chan14">RC Channel 14 Raw Value</field>
+      <field type="uint16_t" name="chan15">RC Channel 15 Raw Value</field>
+      <field type="uint16_t" name="chan16">RC Channel 16 Raw Value</field>
+    </message>
+
+    <message id="55501" name="ASCL_RC_CHANNELS_SCALED">
+      <description>Scaled values of RC input. -10,000(-100%) ~ 10,000(100%)</description>
+      <field type="int16_t" name="chan1">RC Channel 1 Scaled Value</field>
+      <field type="int16_t" name="chan2">RC Channel 2 Scaled Value</field>
+      <field type="int16_t" name="chan3">RC Channel 3 Scaled Value</field>
+      <field type="int16_t" name="chan4">RC Channel 4 Scaled Value</field>
+      <field type="int16_t" name="chan5">RC Channel 5 Scaled Value</field>
+      <field type="int16_t" name="chan6">RC Channel 6 Scaled Value</field>
+      <field type="int16_t" name="chan7">RC Channel 7 Scaled Value</field>
+      <field type="int16_t" name="chan8">RC Channel 8 Scaled Value</field>
+      <field type="int16_t" name="chan9">RC Channel 9 Scaled Value</field>
+      <field type="int16_t" name="chan10">RC Channel 10 Scaled Value</field>
+      <field type="int16_t" name="chan11">RC Channel 11 Scaled Value</field>
+      <field type="int16_t" name="chan12">RC Channel 12 Scaled Value</field>
+      <field type="int16_t" name="chan13">RC Channel 13 Scaled Value</field>
+      <field type="int16_t" name="chan14">RC Channel 14 Scaled Value</field>
+      <field type="int16_t" name="chan15">RC Channel 15 Scaled Value</field>
+      <field type="int16_t" name="chan16">RC Channel 16 Scaled Value</field>
+    </message>
+
+    <message id="55502" name="ASCL_PWM_OUT">
+      <description>PWM out (from FC) to servo/motor</description>
+      <field type="uint16_t" name="chan1">PWM servo/motor 1</field>
+      <field type="uint16_t" name="chan2">PWM servo/motor 2</field>
+      <field type="uint16_t" name="chan3">PWM servo/motor 3</field>
+      <field type="uint16_t" name="chan4">PWM servo/motor 4</field>
+      <field type="uint16_t" name="chan5">PWM servo/motor 5</field>
+      <field type="uint16_t" name="chan6">PWM servo/motor 6</field>
+      <field type="uint16_t" name="chan7">PWM servo/motor 7</field>
+      <field type="uint16_t" name="chan8">PWM servo/motor 8</field>
+      <field type="uint16_t" name="chan9">PWM servo/motor 9</field>
+      <field type="uint16_t" name="chan10">PWM servo/motor 10</field>
+      <field type="uint16_t" name="chan11">PWM servo/motor 11</field>
+      <field type="uint16_t" name="chan12">PWM servo/motor 12</field>
+      <field type="uint16_t" name="chan13">PWM servo/motor 13</field>
+      <field type="uint16_t" name="chan14">PWM servo/motor 14</field>
+      <field type="uint16_t" name="chan15">PWM servo/motor 15</field>
+      <field type="uint16_t" name="chan16">PWM servo/motor 16</field>
+    </message>
+
+
+    <message id="55600" name="ASCL_RL_RESET_COMMAND_LANDING">
+      <description> Reset command to dynamic server for 'ADD_LANDING' problem </description>
+        <field type="float" name="x" units="m"> multirotor reset position x(inertial) </field>
+        <field type="float" name="y" units="m"> multirotor reset position y(inertial) </field>
+        <field type="float" name="z" units="m"> multirotor reset position h(inertial) </field>
+        <field type="float" name="dx" units="m/s"> multirotor reset velocity x(inertial) </field>
+        <field type="float" name="dy" units="m/s"> multirotor reset velocity y(inertial) </field>
+        <field type="float" name="dz" units="m/s"> multirotor reset velocity z(inertial) </field>
+        <field type="float" name="roll" units="rad"> multirotor reset attitude roll</field>
+        <field type="float" name="pitch" units="rad"> multirotor reset attitude pitch</field>
+        <field type="float" name="yaw" units="rad"> multirotor reset attitude yaw</field>
+        <field type="float" name="p" units="rad/s"> multirotor reset body angular rate p</field>
+        <field type="float" name="q" units="rad/s"> multirotor reset body angular rate q</field>
+        <field type="float" name="r" units="rad/s"> multirotor reset body angular rate r</field>
+    </message>
+
+    <message id="55610" name="ASCL_RL_FULL_STATE_LANDING">
+      <description> State that fully describes 'ADD_LANDING' problem </description>
+        <field type="float[3]" name="x" units="m"> multirotor position(inertial) </field>
+        <field type="float[3]" name="dx" units="m/s"> multirotor velocity(inertial) </field>
+        <field type="float[3]" name="euler" units="rad"> multirotor attitude </field>
+        <field type="float[3]" name="pqr" units="rad/s"> multirotor body angular rate </field>
+        <field type="float[3]" name="tgtX" units="m"> target position(inertial), normally origin </field>
+        <field type="float[3]" name="tgtdX" units="m/s"> target velocity(inertial), normally zeros </field>
+        <field type="uint16_t[4]" name="cmdLB" units="none"> previous command(s) loopback </field>
+    </message>
+
+    <message id="55611" name="ASCL_RL_OBSERVATION_LANDING">
+      <description> Observation that an agent will get about 'ADD_LANDING' problem </description>
+        <field type="float" name="h_bar" units="none"> normalized height </field>
+        <field type="float" name="dImageX" units="none"> normalized position of target (x) w.r.t vehicle view point </field>
+        <field type="float" name="dImageY" units="none"> normalized position of target (y) w.r.t vehicle view point </field>
+        <field type="float" name="velBodyX" units="m/s"> body velocity X </field>
+        <field type="float" name="velBodyY" units="m/s"> body velocity Y </field>
+        <field type="float" name="dz" units="m/s"> descent rate </field>
+        <field type="float" name="p" units="rad/s"> body angular rate (axis-1) </field>
+        <field type="float" name="q" units="rad/s"> body angular rate (axis-2) </field>
+        <field type="float" name="phi" units="rad"> roll angle </field>
+        <field type="float" name="theta" units="rad"> pitch angle </field>
+    </message>
+
+    <message id="55620" name="ASCL_RL_ACTION_PHI_THETA_COMMAND_LANDING">
+      <description> phi and theta command </description>
+        <field type="float" name="phi" units="none"> roll command </field>
+        <field type="float" name="theta" units="none"> pitch command </field>
+    </message>
+
+    <!-- <message id="53630" name="ASCL_RL_REWARD_LANDING">
+      <description> phi and theta command: [-1, 1] </description>
+        <field type="float" name="phi" units="none"> roll command </field>
+        <field type="float" name="theta" units="none"> pitch command </field>
+    </mesage> -->
+    <!-- END ASCL defined range (0xd000 to 0xdfff) -->
+  </messages>
+</mavlink>

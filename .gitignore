@@ -1,0 +1,10 @@
+/*
+
+!.gitignore
+!message_definitions/
+!uavMavlink_c/
+!uavMavlink_cpp/
+!uavMavlink_js/
+!uavMavlink_python/
+!usage.txt
+!readme.*

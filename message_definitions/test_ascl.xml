@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<!-- Mavlink Message Definition File for ASCL UAV team -->
+<mavlink>
+  <version>1</version>
+  <!-- <include>common.xml</include> -->
+  <enums>
+    <enum name="ASCL_PARAM_NAV">
+      <description> Parameter id of a certain parameter categorized as ASCL_PARAM_CATEGORY_NAV. </description>
+      <!-- 0~15: Covariance P0 -->
+      <entry value="0" name="ASCL_PARAM_NAV_COV_P0_QUAT">
+        <description> Covariance P0 for quaternions </description>
+      </entry>
+      <entry value="1" name="ASCL_PARAM_NAV_COV_P0_EULER_TILT">
+        <description> Covariance P0 for roll,pitch </description>
+      </entry>
+      <entry value="2" name="ASCL_PARAM_NAV_COV_P0_EULER_HEADING">
+        <description> Covariance P0 for heading </description>
+      </entry>
+      <entry value="3" name="ASCL_PARAM_NAV_COV_P0_HOR_VEL">
+        <description> Covariance P0 for horizontal velocity </description>
+      </entry>
+      <entry value="4" name="ASCL_PARAM_NAV_COV_P0_VER_VEL">
+        <description> Covariance P0 for vertical velocity </description>
+      </entry>
+      <entry value="5" name="ASCL_PARAM_NAV_COV_P0_HOR_POS">
+        <description> Covariance P0 for horizontal position </description>
+      </entry>
+      <entry value="6" name="ASCL_PARAM_NAV_COV_P0_VER_POS">
+        <description> Covariance P0 for altitude </description>
+      </entry>
+      <entry value="7" name="ASCL_PARAM_NAV_COV_P0_GYRO_BIAS">
+        <description> Covariance P0 for gyro bias </description>
+      </entry>
+      <entry value="8" name="ASCL_PARAM_NAV_COV_P0_ACC_BIAS">
+        <description> Covariance P0 for acc bias </description>
+      </entry>
+      <entry value="9" name="ASCL_PARAM_NAV_COV_P0_MAG_NED">
+        <description> Covariance P0 for NED magnetic flux </description>
+      </entry>
+      <entry value="10" name="ASCL_PARAM_NAV_COV_P0_MAG_BIAS">
+        <description> Covariance P0 for mag bias </description>
+      </entry>
+      <!-- 11~15 reserved for additional P0 -->
+      <!-- 16~31: Covariance Q -->
+      <entry value="16" name="ASCL_PARAM_NAV_COV_Q_GYRO">
+        <description> Covariance Q for delta angle </description>
+      </entry>
+      <entry value="17" name="ASCL_PARAM_NAV_COV_Q_GYRO_BIAS">
+        <description> Covariance Q for gyro bias </description>
+      </entry>
+      <entry value="18" name="ASCL_PARAM_NAV_COV_Q_ACC">
+        <description> Covariance Q for delta velocity </description>
+      </entry>
+      <entry value="19" name="ASCL_PARAM_NAV_COV_Q_ACC_BIAS">
+        <description> Covariance Q for acc bias </description>
+      </entry>
+      <entry value="20" name="ASCL_PARAM_NAV_COV_Q_MAG_NED">
+        <description> Covariance Q for NED magnetic flux </description>
+      </entry>
+      <entry value="21" name="ASCL_PARAM_NAV_COV_Q_MAG_BIAS">
+        <description> Covariance Q for mag bias </description>
+      </entry>
+      <!-- 22~31: reserved for additional Q -->
+      <!-- 32~47: Covarnace R -->
+      <entry value="32" name="ASCL_PARAM_NAV_COV_R_GPS_HOR_POS">
+        <description> Covariance R for NE position of GPS lat, long, height converted into NED </description>
+      </entry>
+      <entry value="33" name="ASCL_PARAM_NAV_COV_R_GPS_VER_POS">
+        <description> Covariance R for D position of GPS lat, long, height converted into NED </description>
+      </entry>
+      <entry value="34" name="ASCL_PARAM_NAV_COV_R_GPS_VEL">
+        <description> Covariance R for GPS velocity_ned </description>
+      </entry>
+      <entry value="35" name="ASCL_PARAM_NAV_COV_R_BARO_ALT">
+        <description> Covariance R for barometric altitude </description>
+      </entry>
+      <entry value="36" name="ASCL_PARAM_NAV_COV_R_MAG_BODY">
+        <description> Covariance R for magnetometer measurement </description>
+      </entry>
+      <entry value="37" name="ASCL_PARAM_NAV_COV_R_MAG_DECLINATION">
+        <description> Covariance R for magnetic declination </description>
+      </entry>
+      <entry value="38" name="ASCL_PARAM_NAV_COV_R_AHRS">
+        <description> Covariance R for AHRS </description>
+      </entry>
+      <!-- 39~47: reserved for additional R -->
+    </enum>
+
+    <enum name="ASCL_PARAM_ID_CTRL">
+      <description> Parameter id of a certain parameter categorized as ASCL_PARAM_CATEGORY_CTRL. </description>
+      <!-- example -->
+      <entry value="0" name="ASCL_PARAM_ID_CTRL_GAIN_P_RATE_P">
+      </entry>
+      <entry value="1" name="ASCL_PARAM_ID_CTRL_GAIN_I_RATE_P">
+      </entry>
+      <entry value="2" name="ASCL_PARAM_ID_CTRL_GAIN_D_RATE_P">
+      </entry>
+      <entry value="3" name="ASCL_PARAM_ID_CTRL_GAIN_P_RATE_Q">
+      </entry>
+      <entry value="4" name="ASCL_PARAM_ID_CTRL_GAIN_I_RATE_Q">
+      </entry>
+      <entry value="5" name="ASCL_PARAM_ID_CTRL_GAIN_D_RATE_Q">
+      </entry>
+      <entry value="6" name="ASCL_PARAM_ID_CTRL_GAIN_P_RATE_Q">
+      </entry>
+      <entry value="7" name="ASCL_PARAM_ID_CTRL_GAIN_I_RATE_Q">
+      </entry>
+      <entry value="8" name="ASCL_PARAM_ID_CTRL_GAIN_D_RATE_Q">
+      </entry>
+      <entry value="9" name="ASCL_PARAM_ID_CTRL_GAIN_P_ATT_ROLL">
+      </entry>
+      <entry value="10" name="ASCL_PARAM_ID_CTRL_GAIN_I_ATT_ROLL">
+      </entry>
+      <entry value="11" name="ASCL_PARAM_ID_CTRL_GAIN_D_ATT_ROLL">
+      </entry>
+      <entry value="12" name="ASCL_PARAM_ID_CTRL_GAIN_P_ATT_PITCH">
+      </entry>
+      <entry value="13" name="ASCL_PARAM_ID_CTRL_GAIN_I_ATT_PITCH">
+      </entry>
+      <entry value="14" name="ASCL_PARAM_ID_CTRL_GAIN_D_ATT_PITCH">
+      </entry>
+      <entry value="15" name="ASCL_PARAM_ID_CTRL_GAIN_P_ATT_YAW">
+      </entry>
+      <entry value="16" name="ASCL_PARAM_ID_CTRL_GAIN_I_ATT_YAW">
+      </entry>
+      <entry value="17" name="ASCL_PARAM_ID_CTRL_GAIN_D_ATT_YAW">
+      </entry>
+    </enum>
+
+    <enum name="ASCL_PARAM_ID_GUID">
+      <description> Parameter id of a certain parameter categorized as ASCL_PARAM_CATEGORY_GUID. </description>
+      <!-- example -->
+      <entry value = "0" name="ASCL_PARAM_ID_GUID_PN_CONSTANT">
+        <description> Proportional constant of PN guidance, 3~5 </description>
+      </entry>
+      <entry value = "1" name="ASCL_PARAM_ID_GUID_MAXIMUM_PULLUP_G">
+        <description> Constraint on maximum acceleration represented in "g" </description>
+      </entry>
+    </enum>
+
+    <enum name="ASCL_PARAM_ID_MISSION">
+      <description> Parameter id of a certain parameter categorized as ASCL_PARAM_CATEGORY_MISSION. </description>
+      <!-- example -->
+      <entry value = "0" name="ASCL_PARAM_ID_MISSION_BATTERY_RTB">
+        <description> Vehicle should perform RTB when battery level is below this </description>
+      </entry>
+    </enum>
+
+  </enums>
+</mavlink>

@@ -1,0 +1,51 @@
+TRANSMIT:
+
+mavlink_msg_sys_status_pack(1, 200, &msg, 0, 0, 0, 500, 11000, -1, -1, 0, 0, 0, 0, 0, 0);
+or
+mavlink_msg_sys_status_encode(1, 200, &msg, mavlink_sys_status_t *something)
+
+mavlink_message_t msg
+
+len = mavlink_msg_to_send_buffer(buf, &msg);
+
+
+FC: HAL_UART_TRANSMIT(huart, buf, len, timeout)
+GCS: pass buf,len to serial port communicator
+
+
+
+RECEIVE:
+for every dma channel (e.g. dma X : int) (only one now)
+
+whenever a byte comes in; 
+if(mavlink_parse_char(X, single byte, *message, *status))
+ : use *message
+
+OR
+whenever we look at our dma buffer
+
+while(buffer[iter])
+	if(mavlink_parse_char(X, buffer[iter], *message, *status))
+		use msg
+	iter++
+
+
+
+PARSING:
+use(mavlink_messag_t &message)
+{
+switch(message.msgid)
+{
+	case MSG1:
+		mavlink_MSG1_t target;
+		mavlink_msg_MSG1_decode(message, target);
+		target.~~~
+		break;
+}
+}
+
+
+
+PARAMETER_SET:
+
+Binary Search using strncmp(char[16])
